@@ -8,13 +8,12 @@ def sByCodeBar(code):
         cursor = db.cursor()
         cursor.execute(query)
         res = cursor.fetchone()
-        while res is not None:
+        if(len(res) >= 4):
             return res
-        noRes = ["El producto {} se ha no encontrado"].format(code)
-        return noRes  
+        
     except:
-        res = "Ocurrio un Error"
-        return res
+        producto = ['No hay producto con el codigo '+code,'noimg.jpg']
+        return producto
     
 
 #for fila in res:

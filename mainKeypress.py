@@ -13,14 +13,24 @@ carpeta_imagenes = os.path.join(carpeta_principal, "img")
 
 Label(ventana, text="Verificar Precios").pack()
 Label(ventana, text="Codigo").pack()
-
+codigo = ''
 entryCode = Entry(ventana, borderwidth=1, width=60)
 entryCode.pack()
 label_res = Label(ventana, text="Resultado")
 label_res.pack(pady=10)
+def key_pressed(event):
+    global codigo
+    if event.keysym=='Return':
+        print(event.keysym)
+        searchByCode(codigo)
+        codigo = ''
+    else:
+        codigo+= event.keysym
 
-def searchByCode():
-    producto = sByCodeBar(entryCode.get())
+
+
+def searchByCode(codigo):
+    producto = sByCodeBar(codigo)
     if len(producto) == 4:
         pathImge = (os.path.join(carpeta_imagenes, producto[3]))
         #pathImgestr = str(pathImge)
@@ -52,9 +62,8 @@ def searchByCode():
         Label(ventana, image=ImageTk.PhotoImage(productoImgae)).pack()
         Label(ventana, text=producto[0]).pack()
 
-search = Button(ventana, text="Buscar", command=searchByCode).pack()
 
-
+ventana.bind("<Key>",key_pressed)
 ventana.resizable(False, False)
 ventana.mainloop()
 
